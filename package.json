@@ -5,11 +5,21 @@
   "main": "index.js",
   "scripts": {
     "build": "babel src/BugsnagSourceMapPlugin.js -o index.js",
+    "test": "ava",
     "lint": "eslint src/"
   },
   "babel": {
     "presets": [
       "es2015"
+    ]
+  },
+  "ava": {
+    "files": [
+      "test/*.js"
+    ],
+    "verbose": true,
+    "require": [
+      "babel-register"
     ]
   },
   "keywords": [
@@ -28,6 +38,7 @@
   "author": "bakunyo <izuta.hiroyuki@gmail.com> (https://github.com/bakunyo)",
   "license": "ISC",
   "devDependencies": {
+    "ava": "^0.17.0",
     "babel-cli": "^6.18.0",
     "babel-core": "^6.21.0",
     "babel-loader": "^6.2.10",
