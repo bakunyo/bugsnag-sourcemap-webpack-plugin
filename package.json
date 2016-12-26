@@ -1,11 +1,24 @@
 {
   "name": "bugsnag-sourcemap-webpack-plugin",
-  "version": "1.0.0",
-  "description": "",
+  "version": "0.0.1",
+  "description": "A Webpack plugin to upload sourcemaps to Bugsnag after build",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "bakunyo",
+  "keywords": [
+    "webpack",
+    "plugin",
+    "bugsnag",
+    "sourcemap",
+    "source-map"
+  ],
+  "homepage": "https://github.com/bakunyo/bugsnag-sourcemap-webpack-plugin",
+  "bugs": "https://github.com/bakunyo/bugsnag-sourcemap-webpack-plugin/issues",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/bakunyo/bugsnag-sourcemap-webpack-plugin"
+  },
+  "author": "bakunyo <izuta.hiroyuki@gmail.com> (https://github.com/bakunyo)",
   "license": "ISC"
 }
