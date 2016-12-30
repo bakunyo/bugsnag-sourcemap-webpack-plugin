@@ -36,7 +36,7 @@
     "url": "https://github.com/bakunyo/bugsnag-sourcemap-webpack-plugin"
   },
   "author": "bakunyo <izuta.hiroyuki@gmail.com> (https://github.com/bakunyo)",
-  "license": "ISC",
+  "license": "MIT",
   "devDependencies": {
     "ava": "^0.17.0",
     "ava-spec": "^1.0.1",
