@@ -23,39 +23,35 @@ class BugsnagSourceMapPlugin {
 
   afterEmit(compilation) {
     const { assetsByChunkName } = compilation.getStats().toJson();
-    const assets = this.getAssets(assetsByChunkName);
+    const assets = this.constructor.getAssets(assetsByChunkName);
     this.uploadSourceMaps(assets, compilation);
   }
 
-  getAssets(assetsByChunkName) {
+  static getAssets(assetsByChunkName) {
     return Object.keys(assetsByChunkName).map(asset => assetsByChunkName[asset]);
   }
 
   uploadSourceMaps(assets, compilation) {
-    const self = this;
-
     async.each(
       assets,
       (asset, callback) => {
-        self.uploadSourceMap(self, asset[0], asset[1], compilation);
+        this.uploadSourceMap(asset[0], asset[1], compilation);
         callback();
       },
       (err) => {
-        if (err && !self.silent) { throw err; }
+        if (err && !this.silent) { throw err; }
       },
     );
   }
 
-  uploadSourceMap(self, sourceFile, sourceMap, compilation) {
-    const minifiedUrl = path.join(self.publicPath, sourceFile);
+  uploadSourceMap(sourceFile, sourceMap, compilation) {
+    const minifiedUrl = path.join(this.publicPath, sourceFile);
     const sourceMapPath = compilation.assets[sourceMap].existsAt;
     superagent.post(BUGSNAG_ENDPOINT)
-              .field('apiKey', self.apiKey)
+              .field('apiKey', this.apiKey)
               .field('minifiedUrl', minifiedUrl)
               .attach('sourceMap', sourceMapPath)
-              .end((err, res) => {
-                if (err && !self.silent) { throw err; }
-              });
+              .end((err) => { if (err && !this.silent) { throw err; } });
   }
 }
 
