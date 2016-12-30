@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build": "babel src/BugsnagSourceMapPlugin.js -o index.js",
-    "test": "ava",
+    "test": "NODE_PATH='src' ava",
     "lint": "eslint src/"
   },
   "babel": {
