@@ -2,17 +2,17 @@ import async from 'async';
 import superagent from 'superagent';
 import path from 'path';
 
-const BUGSNAG_ENDPOINT = 'https://upload.bugsnag.com'
+const BUGSNAG_ENDPOINT = 'https://upload.bugsnag.com';
 
 class BugsnagSourceMapPlugin {
   constructor({
     apiKey,
     publicPath,
-    silent = false
+    silent = false,
   }) {
-    this.apiKey = apiKey
-    this.publicPath = publicPath
-    this.silent = silent
+    this.apiKey = apiKey;
+    this.publicPath = publicPath;
+    this.silent = silent;
   }
 
   apply(compiler) {
@@ -28,9 +28,7 @@ class BugsnagSourceMapPlugin {
   }
 
   getAssets(assetsByChunkName) {
-    return Object.keys(assetsByChunkName).map(asset => {
-      return assetsByChunkName[asset];
-    });
+    return Object.keys(assetsByChunkName).map(asset => assetsByChunkName[asset]);
   }
 
   uploadSourceMaps(assets, compilation) {
@@ -43,20 +41,20 @@ class BugsnagSourceMapPlugin {
         callback();
       },
       (err) => {
-        if (err && !self.silent) { throw err }
-      }
+        if (err && !self.silent) { throw err; }
+      },
     );
   }
 
   uploadSourceMap(self, sourceFile, sourceMap, compilation) {
     const minifiedUrl = path.join(self.publicPath, sourceFile);
-    const sourceMapPath = compilation.assets[sourceMap].existsAt
+    const sourceMapPath = compilation.assets[sourceMap].existsAt;
     superagent.post(BUGSNAG_ENDPOINT)
               .field('apiKey', self.apiKey)
               .field('minifiedUrl', minifiedUrl)
               .attach('sourceMap', sourceMapPath)
               .end((err, res) => {
-                if (err && !self.silent) { throw err }
+                if (err && !self.silent) { throw err; }
               });
   }
 }
