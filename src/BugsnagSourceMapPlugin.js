@@ -9,10 +9,12 @@ class BugsnagSourceMapPlugin {
     apiKey,
     publicPath,
     silent = false,
+    overwrite = false,
   }) {
     this.apiKey = apiKey;
     this.publicPath = publicPath;
     this.silent = silent;
+    this.overwrite = overwrite;
   }
 
   apply(compiler) {
@@ -52,9 +54,15 @@ class BugsnagSourceMapPlugin {
   uploadSourceMap(sourceFile, sourceMap, compilation) {
     const minifiedUrl = path.join(this.publicPath, sourceFile);
     const sourceMapPath = compilation.assets[sourceMap].existsAt;
+    const options = {
+      apiKey: this.apiKey,
+      minifiedUrl,
+    };
+
+    if (this.overwrite === true) { options.overwrite = true; }
+
     superagent.post(BUGSNAG_ENDPOINT)
-              .field('apiKey', this.apiKey)
-              .field('minifiedUrl', minifiedUrl)
+              .field(options)
               .attach('sourceMap', sourceMapPath)
               .end((err) => { if (err && !this.silent) { throw err; } });
   }
