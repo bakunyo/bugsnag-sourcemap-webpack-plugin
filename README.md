@@ -15,6 +15,7 @@ const BugsnagSourceMapPlugin = require('bugsnag-sourcemap-webpack-plugin');
 
 module.exports = {
   // your settings for webpack
+  devtool: 'source-map',
   plugins: [
     new BugsnagSourceMapPlugin({
       apiKey: 'YOUR_BUGSNAG_API_KEY',
