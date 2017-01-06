@@ -31,6 +31,7 @@ module.exports = {
 |apiKey|y|the Bugsnag API key that is used in your app.|-|
 |publicPath|y|the Base hosted url of your compiled assets.|-|
 |silent||whether or not ignore js errors in upload to Bugsnag.|false|
+|overwrite||whether to overwrite any existing version of files.|false|
 
 ## Reference
 [Bugsnag - Sourcemap Upload API](https://docs.bugsnag.com/api/js-source-map-upload/)
