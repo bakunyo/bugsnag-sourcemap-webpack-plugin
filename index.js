@@ -25,13 +25,16 @@ var BugsnagSourceMapPlugin = function () {
     var apiKey = _ref.apiKey,
         publicPath = _ref.publicPath,
         _ref$silent = _ref.silent,
-        silent = _ref$silent === undefined ? false : _ref$silent;
+        silent = _ref$silent === undefined ? false : _ref$silent,
+        _ref$overwrite = _ref.overwrite,
+        overwrite = _ref$overwrite === undefined ? false : _ref$overwrite;
 
     _classCallCheck(this, BugsnagSourceMapPlugin);
 
     this.apiKey = apiKey;
     this.publicPath = publicPath;
     this.silent = silent;
+    this.overwrite = overwrite;
   }
 
   _createClass(BugsnagSourceMapPlugin, [{
@@ -78,7 +81,16 @@ var BugsnagSourceMapPlugin = function () {
 
       var minifiedUrl = _path2.default.join(this.publicPath, sourceFile);
       var sourceMapPath = compilation.assets[sourceMap].existsAt;
-      _superagent2.default.post(BUGSNAG_ENDPOINT).field('apiKey', this.apiKey).field('minifiedUrl', minifiedUrl).attach('sourceMap', sourceMapPath).end(function (err) {
+      var options = {
+        apiKey: this.apiKey,
+        minifiedUrl: minifiedUrl
+      };
+
+      if (this.overwrite === true) {
+        options.overwrite = true;
+      }
+
+      _superagent2.default.post(BUGSNAG_ENDPOINT).field(options).attach('sourceMap', sourceMapPath).end(function (err) {
         if (err && !_this3.silent) {
           throw err;
         }
