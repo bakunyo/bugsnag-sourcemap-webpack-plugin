@@ -39,6 +39,11 @@ var BugsnagSourceMapPlugin = function () {
     value: function apply(compiler) {
       var _this = this;
 
+      if (compiler.options.devtool === false) {
+        console.warn('WARN: sourcemap option is not defined. (from bugsnag-sourcemap-webpack-plugin)\n');
+        return;
+      }
+
       compiler.plugin('after-emit', function (compilation) {
         _this.afterEmit(compilation);
       });
