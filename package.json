@@ -1,6 +1,6 @@
 {
   "name": "bugsnag-sourcemap-webpack-plugin",
-  "version": "0.9.1",
+  "version": "0.9.2",
   "description": "A Webpack plugin to upload sourcemaps to Bugsnag after build",
   "main": "index.js",
   "scripts": {
