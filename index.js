@@ -66,7 +66,9 @@ var BugsnagSourceMapPlugin = function () {
       var _this2 = this;
 
       _async2.default.each(assets, function (asset, callback) {
-        _this2.uploadSourceMap(asset[0], asset[1], compilation);
+        var compiledAsset = asset[0];
+        var mapAsset = asset[asset.indexOf(compiledAsset + '.map')];
+        _this2.uploadSourceMap(compiledAsset, mapAsset, compilation);
         callback();
       }, function (err) {
         if (err && !_this2.silent) {
@@ -79,7 +81,7 @@ var BugsnagSourceMapPlugin = function () {
     value: function uploadSourceMap(sourceFile, sourceMap, compilation) {
       var _this3 = this;
 
-      var minifiedUrl = _path2.default.join(this.publicPath, sourceFile);
+      var minifiedUrl = this.publicPath + '/' + sourceFile;
       var sourceMapPath = compilation.assets[sourceMap].existsAt;
       var options = {
         apiKey: this.apiKey,
@@ -92,7 +94,11 @@ var BugsnagSourceMapPlugin = function () {
 
       _superagent2.default.post(BUGSNAG_ENDPOINT).field(options).attach('sourceMap', sourceMapPath).end(function (err) {
         if (err && !_this3.silent) {
-          throw err;
+          if (err.response && err.response.text) {
+            throw 'BugsnagSourceMapPlugin Error: ' + err.response.text;
+          } else {
+            throw err;
+          }
         }
       });
     }

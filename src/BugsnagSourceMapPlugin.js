@@ -42,7 +42,9 @@ class BugsnagSourceMapPlugin {
     async.each(
       assets,
       (asset, callback) => {
-        this.uploadSourceMap(asset[0], asset[1], compilation);
+        const compiledAsset = asset[0];
+        const mapAsset = asset[asset.indexOf(`${compiledAsset}.map`)];
+        this.uploadSourceMap(compiledAsset, mapAsset, compilation);
         callback();
       },
       (err) => {
@@ -52,7 +54,7 @@ class BugsnagSourceMapPlugin {
   }
 
   uploadSourceMap(sourceFile, sourceMap, compilation) {
-    const minifiedUrl = path.join(this.publicPath, sourceFile);
+    const minifiedUrl = `${this.publicPath}/${sourceFile}`;
     const sourceMapPath = compilation.assets[sourceMap].existsAt;
     const options = {
       apiKey: this.apiKey,
@@ -64,7 +66,13 @@ class BugsnagSourceMapPlugin {
     superagent.post(BUGSNAG_ENDPOINT)
               .field(options)
               .attach('sourceMap', sourceMapPath)
-              .end((err) => { if (err && !this.silent) { throw err; } });
+              .end((err) => { if (err && !this.silent) {
+                if (err.response && err.response.text) {
+                  throw `BugsnagSourceMapPlugin Error: ${err.response.text}`;
+                } else {
+                  throw err;
+                }
+              }});
   }
 }
 
