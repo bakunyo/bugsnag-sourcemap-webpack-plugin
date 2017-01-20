@@ -66,7 +66,9 @@ var BugsnagSourceMapPlugin = function () {
       var _this2 = this;
 
       _async2.default.each(assets, function (asset, callback) {
-        var compiledAsset = asset[0];
+        var compiledAsset = asset.filter(function (s) {
+          return s.slice(-3) === '.js';
+        })[0];
         var mapAsset = asset[asset.indexOf(compiledAsset + '.map')];
         _this2.uploadSourceMap(compiledAsset, mapAsset, compilation);
         callback();
@@ -93,11 +95,15 @@ var BugsnagSourceMapPlugin = function () {
       }
 
       _superagent2.default.post(BUGSNAG_ENDPOINT).field(options).attach('sourceMap', sourceMapPath).end(function (err) {
-        if (err && !_this3.silent) {
-          if (err.response && err.response.text) {
-            throw 'BugsnagSourceMapPlugin Error: ' + err.response.text;
+        if (err) {
+          if (!_this3.silent) {
+            if (err.response && err.response.text) {
+              throw 'BugsnagSourceMapPlugin Error: ' + err.response.text;
+            } else {
+              throw err;
+            }
           } else {
-            throw err;
+            console.log('BugsnagSourceMapPlugin Warning: ', err.response.text);
           }
         }
       });
