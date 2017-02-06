@@ -1,7 +1,5 @@
 # Created by https://www.gitignore.io/api/node
 
-*.swp
-
 ### Node ###
 # Logs
 logs
@@ -53,3 +51,5 @@ jspm_packages
 
 
 # End of https://www.gitignore.io/api/node
+
+node_modules/
