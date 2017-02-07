@@ -30,6 +30,7 @@ module.exports = {
 |:--|:--|:--|:--|
 |apiKey|y|the Bugsnag API key that is used in your app.|-|
 |publicPath|y|the Base hosted url of your compiled assets.|-|
+|appVersion||the version of the app that the source map applies to as set in the JavaScript notifier.|-|
 |silent||whether or not ignore js errors in upload to Bugsnag.|false|
 |overwrite||whether to overwrite any existing version of files.|false|
 

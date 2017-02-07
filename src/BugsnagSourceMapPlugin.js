@@ -8,11 +8,13 @@ class BugsnagSourceMapPlugin {
   constructor({
     apiKey,
     publicPath,
+    appVersion = null,
     silent = false,
     overwrite = false,
   }) {
     this.apiKey = apiKey;
     this.publicPath = publicPath;
+    this.appVersion = appVersion;
     this.silent = silent;
     this.overwrite = overwrite;
   }
@@ -62,6 +64,7 @@ class BugsnagSourceMapPlugin {
     };
 
     if (this.overwrite === true) { options.overwrite = true; }
+    if (this.appVersion !== null) { options.appVersion = this.appVersion; }
 
     superagent.post(BUGSNAG_ENDPOINT)
               .field(options)
