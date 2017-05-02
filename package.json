@@ -2,11 +2,17 @@
   "name": "bugsnag-sourcemap-webpack-plugin",
   "version": "0.9.3",
   "description": "A Webpack plugin to upload sourcemaps to Bugsnag after build",
-  "main": "index.js",
+  "main": "lib/index.js",
+  "files": [
+    "lib"
+  ],
   "scripts": {
-    "build": "babel src/BugsnagSourceMapPlugin.js -o index.js",
+    "clean:lib": "if [ -d lib ]; then rm -rf lib; fi",
+    "prebuild": "npm run clean:lib && mkdir -p lib",
+    "build": "babel src/BugsnagSourceMapPlugin.js -o lib/index.js",
     "test": "NODE_PATH='src' ava",
-    "lint": "eslint src/"
+    "lint": "eslint src/",
+    "prepublish": "npm run build"
   },
   "babel": {
     "presets": [
