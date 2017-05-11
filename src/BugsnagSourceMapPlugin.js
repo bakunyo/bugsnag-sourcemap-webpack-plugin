@@ -1,6 +1,7 @@
 import async from 'async';
 import superagent from 'superagent';
 import path from 'path';
+import fs from 'fs';
 
 const BUGSNAG_ENDPOINT = 'https://upload.bugsnag.com';
 
@@ -12,6 +13,7 @@ class BugsnagSourceMapPlugin {
     silent = false,
     overwrite = false,
     uploadSource = false,
+    removeSourceMap = true,
   }) {
     this.apiKey = apiKey;
     this.publicPath = publicPath;
@@ -19,6 +21,7 @@ class BugsnagSourceMapPlugin {
     this.silent = silent;
     this.overwrite = overwrite;
     this.uploadSource = uploadSource;
+    this.removeSourceMap = removeSourceMap;
   }
 
   apply(compiler) {
@@ -88,6 +91,10 @@ class BugsnagSourceMapPlugin {
         } else {
           console.log('BugsnagSourceMapPlugin Warning: ', err.response.text);
         }
+      }
+
+      if (this.removeSourceMap) {
+        fs.unlink(sourceMapPath);
       }
     });
   }

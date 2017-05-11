@@ -34,6 +34,7 @@ module.exports = {
 |silent||whether or not ignore js errors in upload to Bugsnag.|false|
 |overwrite||whether to overwrite any existing version of files.|false|
 |uploadSource||whether to upload source file (see `minifiedFile` in Bugsnag docs).|false|
+|removeSourceMap||whether to remove sourcemap file after uploaded.|true|
 
 ## Reference
 [Bugsnag - Sourcemap Upload API](https://docs.bugsnag.com/api/js-source-map-upload/)
