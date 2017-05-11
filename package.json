@@ -7,8 +7,6 @@
     "lib"
   ],
   "scripts": {
-    "clean:lib": "if [ -d lib ]; then rm -rf lib; fi",
-    "prebuild": "npm run clean:lib && mkdir -p lib",
     "build": "babel src/BugsnagSourceMapPlugin.js -o lib/index.js",
     "test": "NODE_PATH='src' ava",
     "lint": "eslint src/",
