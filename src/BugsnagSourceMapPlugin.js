@@ -89,7 +89,7 @@ class BugsnagSourceMapPlugin {
             throw err;
           }
         } else {
-          console.log('BugsnagSourceMapPlugin Warning: ', err.response.text);
+          console.log('BugsnagSourceMapPlugin Warning: ', err);
         }
       }
 
