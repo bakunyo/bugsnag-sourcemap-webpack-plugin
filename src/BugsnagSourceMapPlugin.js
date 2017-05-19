@@ -49,11 +49,14 @@ class BugsnagSourceMapPlugin {
     async.each(
       assets,
       (asset, callback) => {
-        let compiledAsset = asset.filter(s => s.slice(-3) === '.js')[0];
+        const compiledAsset = asset.filter(s => s.slice(-3) === '.js')[0];
+
+        let mapAsset = compiledAsset;
         if (compiledAsset.slice(-3) === '.js') {
-          compiledAsset = compiledAsset.slice(0, -3)
+          mapAsset = compiledAsset.slice(0, -3)
         }
-        const mapAsset = asset[asset.indexOf(`${compiledAsset}.map`)];
+        mapAsset = asset[asset.indexOf(`${mapAsset}.map`)];
+
         this.uploadSourceMap(compiledAsset, mapAsset, compilation);
         callback();
       },
