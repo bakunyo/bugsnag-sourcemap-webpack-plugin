@@ -94,7 +94,7 @@ class BugsnagSourceMapPlugin {
       }
 
       if (this.removeSourceMap) {
-        fs.unlink(sourceMapPath);
+        fs.unlinkSync(sourceMapPath);
       }
     });
   }
