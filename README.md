@@ -20,7 +20,7 @@ module.exports = {
     new BugsnagSourceMapPlugin({
       apiKey: 'YOUR_BUGSNAG_API_KEY',
       publicPath: 'https://your.site/assets/path'
-    });
+    }),
   ]
 }
 ```
