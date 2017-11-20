@@ -1,5 +1,5 @@
 # BugsnagSourceMapPlugin
-![dependencies](https://david-dm.org/bakunyo/bugsnag-sourcemap-webpack-plugin.svg)  ![Travis CI](https://travis-ci.org/bakunyo/bugsnag-sourcemap-webpack-plugin.svg?branch=master)
+![dependencies](https://david-dm.org/bakunyo/bugsnag-sourcemap-webpack-plugin.svg)  ![Travis CI](https://travis-ci.org/bakunyo/bugsnag-sourcemap-webpack-plugin.svg?branch=master) [![npm version](https://badge.fury.io/js/bugsnag-sourcemap-webpack-plugin.svg)](https://badge.fury.io/js/bugsnag-sourcemap-webpack-plugin)
 
 A [Webpack](http://webpack.github.io/) plugin to upload sourcemaps to [Bugsnag](https://bugsnag.com/) after build
 
