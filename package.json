@@ -57,6 +57,6 @@
   },
   "dependencies": {
     "async": "^2.1.4",
-    "superagent": "^3.3.1"
+    "superagent": "^3.8.2"
   }
 }
