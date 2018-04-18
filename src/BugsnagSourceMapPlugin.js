@@ -30,8 +30,9 @@ class BugsnagSourceMapPlugin {
       return;
     }
 
-    compiler.plugin('after-emit', (compilation) => {
+    compiler.plugin('after-emit', (compilation, callback) => {
       this.afterEmit(compilation);
+      callback();
     });
   }
 
