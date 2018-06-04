@@ -47,6 +47,7 @@
     "babel-cli": "^6.18.0",
     "babel-core": "^6.21.0",
     "babel-loader": "^6.2.10",
+    "babel-preset-env": "^1.7.0",
     "cross-env": "^5.1.6",
     "eslint": "^3.12.2",
     "eslint-config-airbnb": "^13.0.0",
