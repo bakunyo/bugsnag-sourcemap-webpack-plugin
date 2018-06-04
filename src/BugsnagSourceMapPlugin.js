@@ -1,6 +1,6 @@
+/* eslint-disable no-console */
 import async from 'async';
 import superagent from 'superagent';
-import path from 'path';
 import fs from 'fs';
 
 const BUGSNAG_ENDPOINT = 'https://upload.bugsnag.com';
@@ -30,10 +30,24 @@ class BugsnagSourceMapPlugin {
       return;
     }
 
-    compiler.plugin('after-emit', (compilation, callback) => {
-      this.afterEmit(compilation);
-      callback();
-    });
+    if (compiler.hooks
+      && compiler.hooks.afterEmit
+      && typeof compiler.hooks.afterEmit.tap === 'function'
+    ) {
+      // webpack 4
+      compiler.hooks.afterEmit.tap('BugsnagSourceMapPlugin', (compilation, callback) => {
+        this.afterEmit(compilation);
+        if (typeof callback === 'function') {
+          callback();
+        }
+      });
+    } else {
+      // webpack 3 or lower
+      compiler.plugin('after-emit', (compilation, callback) => {
+        this.afterEmit(compilation);
+        callback();
+      });
+    }
   }
 
   afterEmit(compilation) {
@@ -75,7 +89,7 @@ class BugsnagSourceMapPlugin {
 
     const request = superagent.post(BUGSNAG_ENDPOINT)
       .field(options)
-      .attach('sourceMap', sourceMapPath)
+      .attach('sourceMap', sourceMapPath);
 
     if (this.uploadSource === true) {
       request.attach('minifiedFile', sourceFilePath);
@@ -85,7 +99,7 @@ class BugsnagSourceMapPlugin {
       if (err) {
         if (!this.silent) {
           if (err.response && err.response.text) {
-            throw `BugsnagSourceMapPlugin Error: ${err.response.text}`;
+            throw new Error(`BugsnagSourceMapPlugin Error: ${err.response.text}`);
           } else {
             throw err;
           }
