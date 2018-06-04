@@ -37,7 +37,9 @@ class BugsnagSourceMapPlugin {
       // webpack 4
       compiler.hooks.afterEmit.tap('BugsnagSourceMapPlugin', (compilation, callback) => {
         this.afterEmit(compilation);
-        callback();
+        if (typeof callback === 'function') {
+          callback();
+        }
       });
     } else {
       // webpack 3 or lower
