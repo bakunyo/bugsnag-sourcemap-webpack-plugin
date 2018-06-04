@@ -8,7 +8,7 @@
   ],
   "scripts": {
     "build": "babel src/BugsnagSourceMapPlugin.js -o lib/index.js",
-    "test": "NODE_PATH='src' ava",
+    "test": "cross-env NODE_PATH='src' ava",
     "lint": "eslint src/",
     "prepublish": "npm run build"
   },
@@ -48,6 +48,7 @@
     "babel-core": "^6.21.0",
     "babel-loader": "^6.2.10",
     "babel-preset-es2015": "^6.18.0",
+    "cross-env": "^5.1.6",
     "eslint": "^3.12.2",
     "eslint-config-airbnb": "^13.0.0",
     "eslint-loader": "^1.6.1",
