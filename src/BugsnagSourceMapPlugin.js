@@ -30,10 +30,22 @@ class BugsnagSourceMapPlugin {
       return;
     }
 
-    compiler.plugin('after-emit', (compilation, callback) => {
-      this.afterEmit(compilation);
-      callback();
-    });
+    if (compiler.hooks
+      && compiler.hooks.afterEmit
+      && typeof compiler.hooks.afterEmit.tap === 'function'
+    ) {
+      // webpack 4
+      compiler.hooks.afterEmit.tap('BugsnagSourceMapPlugin', (compilation, callback) => {
+        this.afterEmit(compilation);
+        callback();
+      });
+    } else {
+      // webpack 3 or lower
+      compiler.plugin('after-emit', (compilation, callback) => {
+        this.afterEmit(compilation);
+        callback();
+      });
+    }
   }
 
   afterEmit(compilation) {
